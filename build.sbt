@@ -3,6 +3,9 @@ lazy val V = _root_.scalafix.sbt.BuildInfo
 lazy val rulesCrossVersions = Seq(V.scala213, V.scala212, V.scala211)
 lazy val scala3Version = "3.0.1"
 
+ThisBuild / scalafixScalaBinaryVersion := CrossVersion.binaryScalaVersion(scalaVersion.value)
+ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0"
+
 inThisBuild(
   List(
     organization := "net.pixiv",
@@ -15,7 +18,7 @@ inThisBuild(
         "Kazuma Iemura",
         "javakky@pixiv.co.jp",
         url("https://github.com/Javakky-pxv")
-      ),
+      )
     ),
     semanticdbEnabled := true,
     semanticdbVersion := scalafixSemanticdb.revision
@@ -31,6 +34,18 @@ lazy val `scalafix-rule-pixiv` = (project in file("."))
   )
   .settings(
     publish / skip := true
+  )
+
+lazy val src = (project in file("rules"))
+  .settings(
+    libraryDependencies += "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion,
+    scalacOptions ++= Seq(
+      "-deprecation",
+      "-feature",
+      "-Ywarn-unused:imports,locals,patvars"
+    ),
+    semanticdbEnabled := true,
+    semanticdbVersion := scalafixSemanticdb.revision
   )
 
 lazy val rules = projectMatrix
