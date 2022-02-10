@@ -1,6 +1,8 @@
+import sbt.Project.projectToRef
+
 lazy val V = _root_.scalafix.sbt.BuildInfo
 
-lazy val rulesCrossVersions = Seq(V.scala213, V.scala212, V.scala211)
+lazy val rulesCrossVersions = Seq(V.scala213)
 lazy val scala3Version = "3.0.1"
 
 ThisBuild / scalafixScalaBinaryVersion := CrossVersion.binaryScalaVersion(scalaVersion.value)
@@ -28,7 +30,7 @@ inThisBuild(
 
 lazy val `scalafix-rule-pixiv` = (project in file("."))
   .aggregate(
-    rules.projectRefs ++
+    Seq(projectToRef(src)) ++
       input.projectRefs ++
       output.projectRefs ++
       tests.projectRefs: _*
@@ -39,7 +41,10 @@ lazy val `scalafix-rule-pixiv` = (project in file("."))
 
 lazy val src = (project in file("rules"))
   .settings(
-    libraryDependencies += "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion,
+    libraryDependencies ++= Seq(
+      "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion,
+      "org.scalatest" %% "scalatest" % "3.2.9" % "test"
+    ),
     scalacOptions ++= Seq(
       "-deprecation",
       "-feature",
@@ -52,7 +57,8 @@ lazy val src = (project in file("rules"))
 lazy val rules = projectMatrix
   .settings(
     moduleName := "scalafix",
-    libraryDependencies += "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion
+    libraryDependencies += "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion,
+    publish / skip := true
   )
   .defaultAxes(VirtualAxis.jvm)
   .jvmPlatform(rulesCrossVersions)
@@ -97,23 +103,8 @@ lazy val tests = projectMatrix
     rulesCrossVersions.map(VirtualAxis.scalaABIVersion) :+ VirtualAxis.jvm: _*
   )
   .customRow(
-    scalaVersions = Seq(V.scala212),
-    axisValues = Seq(TargetAxis(scala3Version), VirtualAxis.jvm),
-    settings = Seq()
-  )
-  .customRow(
     scalaVersions = Seq(V.scala213),
     axisValues = Seq(TargetAxis(V.scala213), VirtualAxis.jvm),
-    settings = Seq()
-  )
-  .customRow(
-    scalaVersions = Seq(V.scala212),
-    axisValues = Seq(TargetAxis(V.scala212), VirtualAxis.jvm),
-    settings = Seq()
-  )
-  .customRow(
-    scalaVersions = Seq(V.scala211),
-    axisValues = Seq(TargetAxis(V.scala211), VirtualAxis.jvm),
     settings = Seq()
   )
   .dependsOn(rules)
