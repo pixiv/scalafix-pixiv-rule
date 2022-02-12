@@ -1,11 +1,8 @@
-/*
-rule = UnnecessarySemicolon
-*/
-package fix
+package fix.pixiv
 
 object UnnecessarySemicolon {
-  val x = 3;
+  val x = 3
   println(x)
 
   val a = 1; val b = 2
-};
+}
