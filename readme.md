@@ -17,3 +17,12 @@ ThisBuild / scalafixDependencies += "net.pixiv" %% "scalafix-pixiv-rule" % "<VER
 val x = 3; // rewrite to: `val x = 3`
 val a = 1; val b = 2
 ```
+
+## fix.pixiv.ZeroIndexToHead
+
+`Seq` のインデックスによる最初の要素へのアクセスを `head` 呼び出しに置換します。
+
+```scala
+/* rule = ZeroIndexToHead */
+Seq(1, 2, 3)(0) // rewrite to: `Seq(1, 2, 3).head`
+```
