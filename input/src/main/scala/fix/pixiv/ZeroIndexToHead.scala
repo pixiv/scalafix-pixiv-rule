@@ -1,13 +1,16 @@
-package fix
+/*
+rule = ZeroIndexToHead
+ */
+package fix.pixiv
 
 object ZeroIndexToHead {
   val seq = Seq(1, 2, 3)
-  seq.head
+  seq(0)
 
-  Seq(1, 2, 3).head
+  Seq(1, 2, 3)(0)
 
   val list = List(1, 2, 3)
-  list.head
+  list(0)
 
   val indexed = IndexedSeq(1, 2, 3)
   indexed(0)
