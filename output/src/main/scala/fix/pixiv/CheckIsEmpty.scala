@@ -1,6 +1,3 @@
-/*
-rule = CheckIsEmpty
- */
 package fix.pixiv
 
 object CheckIsEmpty {
