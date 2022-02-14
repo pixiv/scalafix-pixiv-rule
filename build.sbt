@@ -5,6 +5,7 @@ lazy val scala3Version = "3.0.1"
 
 ThisBuild / scalafixScalaBinaryVersion := CrossVersion.binaryScalaVersion(scalaVersion.value)
 ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0"
+ThisBuild / scalafixDependencies += "com.sandinh" %% "scala-rewrites" % "1.1.0-M1"
 
 inThisBuild(
   List(
