@@ -1,5 +1,6 @@
 /*
 rule = CheckIsEmpty
+CheckIsEmpty.alignIsDefined = true
  */
 package fix.pixiv
 
