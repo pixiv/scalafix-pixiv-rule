@@ -1,6 +1,7 @@
 package fix.pixiv
 
 import scala.meta._
+
 import scalafix.v1._
 import util.SymbolConverter.SymbolToSemanticType
 
