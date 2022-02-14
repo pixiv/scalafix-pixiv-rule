@@ -7,6 +7,7 @@ import fix.pixiv.CheckIsEmpty.isType
 import metaconfig.Configured
 import scalafix.v1.{Configuration, Patch, Rule, SemanticDocument, SemanticRule, XtensionTreeScalafix}
 import util.SymbolConverter.SymbolToSemanticType
+import util.ToClassException
 
 class CheckIsEmpty(config: CheckIsEmptyConfig) extends SemanticRule("CheckIsEmpty") {
   def this() = this(CheckIsEmptyConfig.default)
@@ -34,12 +35,17 @@ private object CheckIsEmpty {
   }
 
   def isType(x1: Term, clazz: Class[_])(implicit doc: SemanticDocument): Boolean = {
-    x1 match {
-      case x1: Term.Name => x1.symbol.isAssignableTo(clazz)
-      case x1 @ Term.Apply(_: Term.Name, _) => x1.symbol.isAssignableTo(clazz)
-      case _ @Term.Select(_, x1: Term.Name) => x1.symbol.isAssignableTo(clazz)
-      case _ @Term.Apply(_ @Term.Select(_, x1: Term.Name), _) => x1.symbol.isAssignableTo(clazz)
-      case _ => false
+    try {
+      x1 match {
+        case x1: Term.Name => x1.symbol.isAssignableTo(clazz)
+        case x1 @ Term.Apply(_: Term.Name, _) => x1.symbol.isAssignableTo(clazz)
+        case _ @Term.Select(_, x1: Term.Name) => x1.symbol.isAssignableTo(clazz)
+        case _ @Term.Apply(_ @Term.Select(_, x1: Term.Name), _) => x1.symbol.isAssignableTo(clazz)
+        case _ => false
+      }
+    } catch {
+      // 結果が型アノテーションだと現状検査できないのでスルーする
+      case _: ToClassException => false
     }
   }
 }
