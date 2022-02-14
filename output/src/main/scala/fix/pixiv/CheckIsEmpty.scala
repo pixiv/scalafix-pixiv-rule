@@ -36,4 +36,11 @@ object CheckIsEmpty {
 
   // 配列には isEmpty が存在しないので無視する
   Array(1, 2, 3).length == 0
+
+  case class InSeq(seq: Seq[Int]) {
+    def getSeq(i: Int): Seq[Int] = seq.slice(0, i)
+  }
+  private val inSeq = InSeq(Seq(1, 2, 3))
+  inSeq.seq.isEmpty
+  inSeq.getSeq(2).isEmpty
 }
