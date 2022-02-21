@@ -24,7 +24,8 @@ inThisBuild(
       )
     ),
     semanticdbEnabled := true,
-    semanticdbVersion := scalafixSemanticdb.revision
+    semanticdbVersion := scalafixSemanticdb.revision,
+    scalaVersion := "2.13.7"
   )
 )
 
@@ -51,7 +52,9 @@ lazy val src = (project in file("rules"))
       "-Ywarn-unused:imports,locals,patvars"
     ),
     semanticdbEnabled := true,
-    semanticdbVersion := scalafixSemanticdb.revision
+    semanticdbVersion := scalafixSemanticdb.revision,
+    name := "scalafix-pixiv-rule",
+    version := "0.1.0-SNAPSHOT"
   )
 
 lazy val rules = projectMatrix
