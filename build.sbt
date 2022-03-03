@@ -1,5 +1,3 @@
-import sbt.Project.projectToRef
-
 lazy val V = _root_.scalafix.sbt.BuildInfo
 
 lazy val rulesCrossVersions = Seq(V.scala213)
@@ -31,7 +29,7 @@ inThisBuild(
 
 lazy val `scalafix-rule-pixiv` = (project in file("."))
   .aggregate(
-    Seq(projectToRef(src)) ++
+    rules.projectRefs ++
       input.projectRefs ++
       output.projectRefs ++
       tests.projectRefs: _*
@@ -53,15 +51,13 @@ lazy val src = (project in file("rules"))
     ),
     semanticdbEnabled := true,
     semanticdbVersion := scalafixSemanticdb.revision,
-    name := "scalafix-pixiv-rule",
-    version := "0.1.0-SNAPSHOT"
+    publish / skip := true
   )
 
 lazy val rules = projectMatrix
   .settings(
-    moduleName := "scalafix",
-    libraryDependencies += "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion,
-    publish / skip := true
+    moduleName := "scalafix-pixiv-rule",
+    libraryDependencies += "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion
   )
   .defaultAxes(VirtualAxis.jvm)
   .jvmPlatform(rulesCrossVersions)
