@@ -7,7 +7,6 @@ import fix.pixiv.CheckIsEmpty.isType
 import metaconfig.Configured
 import scalafix.v1.{Configuration, Patch, Rule, SemanticDocument, SemanticRule, XtensionTreeScalafix}
 import util.SymbolConverter.SymbolToSemanticType
-import util.ToClassException
 
 class CheckIsEmpty(config: CheckIsEmptyConfig) extends SemanticRule("CheckIsEmpty") {
   def this() = this(CheckIsEmptyConfig.default)
@@ -44,8 +43,7 @@ private object CheckIsEmpty {
         case _ => false
       }
     } catch {
-      // 結果が型アノテーションだと現状検査できないのでスルーする
-      case _: ToClassException => false
+      case _: Throwable => false
     }
   }
 }
