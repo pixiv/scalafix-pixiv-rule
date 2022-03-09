@@ -1,3 +1,5 @@
+import com.typesafe.sbt.SbtLicenseReport.autoImportImpl.licenseReportDir
+
 lazy val V = _root_.scalafix.sbt.BuildInfo
 
 lazy val rulesCrossVersions = Seq(V.scala213)
@@ -51,7 +53,10 @@ lazy val src = (project in file("rules"))
     ),
     semanticdbEnabled := true,
     semanticdbVersion := scalafixSemanticdb.revision,
-    publish / skip := true
+    publish / skip := true,
+    licenseReportTitle := "NOTICE",
+    licenseReportDir := `scalafix-rule-pixiv`.base,
+    licenseReportTypes := Seq(MarkDown)
   )
 
 lazy val rules = projectMatrix
