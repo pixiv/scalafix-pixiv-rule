@@ -47,7 +47,7 @@ lazy val src = (project in file("rules"))
   .settings(
     libraryDependencies ++= Seq(
       "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion,
-      "org.scalatest" %% "scalatest" % "3.2.9" % "test"
+      "org.scalatest" %% "scalatest" % "3.2.11" % "test"
     ),
     scalacOptions ++= Seq(
       "-deprecation",
@@ -65,7 +65,10 @@ lazy val src = (project in file("rules"))
 lazy val rules = projectMatrix
   .settings(
     moduleName := "scalafix-pixiv-rule",
-    libraryDependencies += "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion
+    libraryDependencies ++= Seq(
+      "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion,
+      "org.scalatest" %% "scalatest" % "3.2.11" % "test"
+    )
   )
   .defaultAxes(VirtualAxis.jvm)
   .jvmPlatform(rulesCrossVersions)
