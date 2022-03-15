@@ -12,6 +12,7 @@ ThisBuild / scalafixDependencies += "com.sandinh" %% "scala-rewrites" % "1.1.0-M
 inThisBuild(
   List(
     organization := "net.pixiv",
+    homepage := Some(url("https://github.com/pixiv/scalafix-pixiv-rule")),
     licenses := List(
       "Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")
     ),
