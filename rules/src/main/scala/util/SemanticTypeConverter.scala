@@ -6,6 +6,7 @@ import scalafix.v1.{BooleanConstant, ByteConstant, CharConstant, Constant, Const
 
 object SemanticTypeConverter {
   implicit class SemanticTypeToClass(semanticType: SemanticType) {
+    @throws[ToClassException]
     def toClass: Class[_] = {
       semanticType match {
         case TypeRef(_, symbol, _) =>
@@ -29,6 +30,7 @@ object SemanticTypeConverter {
 
   }
 
+  @throws[ToClassException]
   def symbolToClass(symbol: scalafix.v1.Symbol): Class[_] = {
     val identifierRegStr = "[a-zA-Z$_][a-zA-Z1-9$_]*"
     val symbolRegStr = s"($identifierRegStr(?:[/.]$identifierRegStr)*)"

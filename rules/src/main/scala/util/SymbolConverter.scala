@@ -5,7 +5,8 @@ import util.SemanticTypeConverter.SemanticTypeToClass
 
 object SymbolConverter {
   implicit class SymbolToSemanticType(symbol: scalafix.v1.Symbol)(implicit doc: Symtab) {
-    def toSemanticType: SemanticType = symbol.info.fold(
+    @throws[ToClassException]
+    private def toSemanticType: SemanticType = symbol.info.fold(
       throw new ToClassException(s"${symbol.displayName} は info を持ちません。")
     ) { info =>
       info.signature match {
@@ -17,20 +18,24 @@ object SymbolConverter {
           if (lowerBound == upperBound) {
             lowerBound
           } else {
-            throw new RuntimeException(
+            throw new ToClassException(
               s"型パラメータ ${symbol.displayName} の型は一意に定まりません。 lower: $lowerBound, upper: $upperBound"
             )
           }
         case ClassSignature(typeParameters, _, _, _) =>
-          TypeRef(scalafix.v1.NoType, symbol, typeParameters.map(info => info.symbol.toSemanticType))
+          TypeRef(
+            scalafix.v1.NoType,
+            symbol,
+            typeParameters.map(info => SymbolToSemanticType(info.symbol).toSemanticType)
+          )
         case signature =>
           throw new ToClassException(s"${symbol.displayName} (${signature.getClass}) は型を持ちません")
       }
     }
-
-    def isAssignableFrom(clazz: Class[_]): Boolean = symbol.toSemanticType.isAssignableFrom(clazz)
-
-    def isAssignableTo(clazz: Class[_]): Boolean = symbol.toSemanticType.isAssignableTo(clazz)
+    @throws[ToClassException]
+    def isAssignableFrom(clazz: Class[_]): Boolean = toSemanticType.isAssignableFrom(clazz)
+    @throws[ToClassException]
+    def isAssignableTo(clazz: Class[_]): Boolean = toSemanticType.isAssignableTo(clazz)
 
   }
 
