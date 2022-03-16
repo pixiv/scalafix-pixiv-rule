@@ -59,6 +59,7 @@ object SemanticTypeConverter {
     }
   }
 
+  @throws[ToClassException]
   def symbolStringToClass(str: String): Class[_] = {
     Try {
       // 本来はオブジェクトなら '$' をつけるべきだが、`apply` の戻り値は元のクラスのため、そちらに合わせる
@@ -75,6 +76,10 @@ object SemanticTypeConverter {
           TypeName(str.drop(lastDot + 1))
         ).typeSignature.dealias.typeSymbol.asClass)
         clazz
+    }.recover[Class[_]] {
+      case _: ClassNotFoundException =>
+        throw new ToClassException(s"$str をクラスまたはタイプに変換できませんでした")
+      case _ => throw new ToClassException("オブジェクトから type を取得できませんでした")
     }.get
   }
 
