@@ -6,7 +6,7 @@ import util.SemanticTypeConverter.SemanticTypeToClass
 object SymbolConverter {
   implicit class SymbolToSemanticType(symbol: scalafix.v1.Symbol)(implicit doc: Symtab) {
     @throws[ToClassException]
-    private def toSemanticType: SemanticType = symbol.info.fold(
+    def toSemanticType: SemanticType = symbol.info.fold(
       throw new ToClassException(s"${symbol.displayName} は info を持ちません。")
     ) { info =>
       info.signature match {
