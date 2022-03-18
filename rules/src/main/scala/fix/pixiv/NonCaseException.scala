@@ -11,9 +11,16 @@ class NonCaseException extends SemanticRule("NonCaseException") {
 
   override def fix(implicit doc: SemanticDocument): Patch = {
     doc.tree.collect {
-      case t @ Defn.Class(List(_: Mod.Case), name, _, _, _ @Template(_, List(_ @Init(typ, _, _)), _, _))
-          if typ.symbol.isAssignableTo(classOf[Exception]) =>
-        Patch.lint(NonCaseExceptionWarn(s"case class として Exception を継承することは推奨されません: $name", t.pos))
+      case t @ Defn.Class(List(_: Mod.Case), name, _, _, _ @Template(_, List(_ @Init(typ, _, _)), _, _)) =>
+        try {
+          if (typ.symbol.isAssignableTo(classOf[Exception])) {
+            Patch.lint(NonCaseExceptionWarn(s"case class として Exception を継承することは推奨されません: $name", t.pos))
+          } else {
+            Patch.empty
+          }
+        } catch {
+          case _: Throwable => Patch.empty
+        }
     }.asPatch
   }
 }
