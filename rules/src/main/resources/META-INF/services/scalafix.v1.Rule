@@ -1,3 +1,4 @@
 fix.pixiv.UnnecessarySemicolon
 fix.pixiv.ZeroIndexToHead
 fix.pixiv.CheckIsEmpty
+fix.pixiv.NonCaseException

@@ -36,3 +36,15 @@ Seq(1, 2, 3)(0) // rewrite to: `Seq(1, 2, 3).head`
 Some(1) == None // rewrite to: Some(1).isEmpty
 Some(1).nonEmpty // if `CheckIsEmpty.alignIsDefined = true` then rewrite to Some(1).isDefined
 ```
+
+## fix.pixiv.NonCaseException
+
+`Exception` を継承した `case class` の定義に警告を発生させます。
+これは、 `case class` として実装することにより、例外の階層化や一意性による恩恵が損なわれるためです。
+
+```
+/* rule = NonCaseException */
+case class NonCaseException(msg: String) extends RuntimeException(msg)
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+case class として Exception を継承することは推奨されません: NonCaseException
+```
