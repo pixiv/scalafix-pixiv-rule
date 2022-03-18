@@ -26,3 +26,13 @@ val a = 1; val b = 2
 /* rule = ZeroIndexToHead */
 Seq(1, 2, 3)(0) // rewrite to: `Seq(1, 2, 3).head`
 ```
+
+## fix.pixiv.CheckIsEmpty
+
+`Option` や `Seq` の空チェックに `isEmpty`, `nonEmpty`, `isDefined` を利用するように置き換えます。
+
+```scala
+/* rule = CheckIsEmpty */
+Some(1) == None // rewrite to: Some(1).isEmpty
+Some(1).nonEmpty // if `CheckIsEmpty.alignIsDefined = true` then rewrite to Some(1).isDefined
+```

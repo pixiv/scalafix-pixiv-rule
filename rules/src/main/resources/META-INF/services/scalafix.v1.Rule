@@ -1,2 +1,3 @@
 fix.pixiv.UnnecessarySemicolon
 fix.pixiv.ZeroIndexToHead
+fix.pixiv.CheckIsEmpty
