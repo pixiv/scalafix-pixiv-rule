@@ -1,6 +1,6 @@
 package util
 
-import scalafix.v1.{ClassSignature, MethodSignature, SemanticType, Symtab, TypeRef, TypeSignature, ValueSignature}
+import scalafix.v1.{ClassSignature, MethodSignature, NoType, SemanticType, Symtab, TypeRef, TypeSignature, ValueSignature}
 import util.SemanticTypeConverter.SemanticTypeToClass
 
 object SymbolConverter {
@@ -17,6 +17,8 @@ object SymbolConverter {
         case TypeSignature(_, lowerBound, upperBound) =>
           if (lowerBound == upperBound) {
             lowerBound
+          } else if (upperBound != NoType) {
+            upperBound
           } else {
             throw new ToClassException(
               s"型パラメータ ${symbol.displayName} の型は一意に定まりません。 lower: $lowerBound, upper: $upperBound"
