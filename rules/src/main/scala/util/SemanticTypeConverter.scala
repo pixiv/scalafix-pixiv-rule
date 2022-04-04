@@ -37,24 +37,8 @@ object SemanticTypeConverter {
     val finRegStr = "[#.]"
     val typeRegStr = s"\\[$identifierRegStr(?:,$identifierRegStr)*]$$"
     val typeValMatch = (s"^$symbolRegStr$finRegStr(?:$typeRegStr)?$$").r
-    val funcValMatch = (s"^$symbolRegStr$finRegStr($identifierRegStr)\\(\\)$finRegStr(?:$typeRegStr)?$$").r
     symbol.toString() match {
       case typeValMatch(str1) => symbolStringToClass(str1.replace('/', '.'))
-      case funcValMatch(str1, str2) =>
-        try {
-          val holder = symbolStringToClass(str1.replace('/', '.'))
-          // メソッドの返り値をリフレクションで取得する
-          import scala.reflect.runtime.universe.{TermName, runtimeMirror}
-          val mirror = runtimeMirror(getClass.getClassLoader)
-          mirror.runtimeClass(
-            mirror.classSymbol(holder).info.member(TermName(str2)).asMethod.returnType
-          )
-        } catch {
-          // メソッドかつ戻り値が T の時は型が取得できない
-          // 外側のメソッドあたりから頑張れば取れるかもしれない
-          case e: Throwable =>
-            throw new ToClassException(s"$str1.$str2() を完全修飾クラス名に変換できませんでした: ${e.getMessage}(${e.getClass})")
-        }
       case _ => throw new ToClassException(s"${symbol.toString()} を完全修飾クラス名に変換できませんでした")
     }
   }
