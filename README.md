@@ -42,9 +42,21 @@ Some(1).nonEmpty // if `CheckIsEmpty.alignIsDefined = true` then rewrite to Some
 `Exception` を継承した `case class` の定義に警告を発生させます。
 これは、 `case class` として実装することにより、例外の階層化や一意性による恩恵が損なわれるためです。
 
-```
+```scala
 /* rule = NonCaseException */
 case class NonCaseException(msg: String) extends RuntimeException(msg)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 case class として Exception を継承することは推奨されません: NonCaseException
+```
+
+## fix.pixiv.UnifyEmptyList
+
+型変数指定のない `List()` や `List.empty` を `Nil` に置き換えます。
+これは、 `Nil` が `List[Nothing]` として定義されているためです。
+また、型変数指定のある `List[Any]()` は `List.empty[Any]` へと置換されます。
+
+```scala
+/* rule = EmptyListToNil */
+val empty = List.empty // rewrite to: val empty = Nil
+val list = List[String]() // rewrite to: val list = List.empty[String]
 ```
