@@ -20,4 +20,10 @@ object SingleConditionMatch {
   Some(1) match {
     case result4 => println(result4.getOrElse(result4))
   }
+
+  Some(1) match {
+    case result5 =>
+      println(result5)
+      println(result5)
+  }
 }

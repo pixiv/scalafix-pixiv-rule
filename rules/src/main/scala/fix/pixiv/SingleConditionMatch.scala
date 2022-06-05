@@ -31,8 +31,9 @@ class SingleConditionMatch extends SemanticRule("SingleConditionMatch") {
         )
       case _ => Patch.empty
     }
-  }.asPatch
+  }.reverse.asPatch
 
+  // TODO: (a \ "test") の \ が消える問題に対応する
   private def toSingleReplaceIfOnceUseVal(from: Tree, valName: String, rhs: Term, body: Term): Patch = {
     body.collect {
       case v: Term.Name if v.value == valName => v
@@ -45,7 +46,10 @@ class SingleConditionMatch extends SemanticRule("SingleConditionMatch") {
   }
 
   private def toBlockPatch(from: Tree, defVal: Defn.Val, body: Term): Patch = {
-    Patch.replaceTree(from, Term.Block(List(defVal, body)).toString())
+    body match {
+      case Term.Block(list) => Patch.replaceTree(from, Term.Block(List(defVal).appendedAll(list)).toString())
+      case body => Patch.replaceTree(from, Term.Block(List(defVal, body)).toString())
+    }
   }
 
   private def toBlockPatch(from: Tree, valName: String, rhs: Term, body: Term): Patch = {

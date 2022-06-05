@@ -14,4 +14,10 @@ object SingleConditionMatch {
   val result4 = Some(1)
   println(result4.getOrElse(result4))
 }
+
+  {
+  val result5 = Some(1)
+  println(result5)
+  println(result5)
+}
 }
