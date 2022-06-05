@@ -1,9 +1,10 @@
 package util
 
+import scala.collection.Seq
+
 import org.scalatest.funsuite.AnyFunSuite
 import scalafix.v1.{SingleType, TypeRef}
 import util.SemanticTypeConverter.SemanticTypeToClass
-import scala.collection.Seq
 
 class SemanticTypeConverterTest extends AnyFunSuite {
 
