@@ -10,7 +10,7 @@ object SingleConditionMatch {
   }
 
   Some(1) match {
-    case Some(result2) => result2
+    case Some(result2) => println(result2)
   }
 
   Some(1) match {

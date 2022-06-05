@@ -4,7 +4,9 @@ object SingleConditionMatch {
 
   private val result = Some(1)
 
-  val result2 = 1
+  Some(1).foreach {
+  result2 => println(result2)
+}
 
   println(Some(1))
 
