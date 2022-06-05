@@ -13,6 +13,6 @@ jobs:
       - name: scalafix
         run: sbt "src/scalafix --check"
       - name: scalafmt
-        run: sbt scalafmtSbtCheck scalafmtCheckAll
+        run: sbt scalafmtSbtCheck "src/scalafmtCheckAll" "input2_13/scalafmtCheckAll"
       - name: Test
         run: sbt test
