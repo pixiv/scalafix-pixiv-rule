@@ -65,3 +65,40 @@ Also, for consistency, `List[Any]()`, which had a type variable specification, h
 val empty = List.empty // rewrite to: val empty = Nil
 val list = List[String]() // rewrite to: val list = List.empty[String]
 ```
+
+## fix.pixiv.SingleConditionMatch
+Split a pattern match that has only one `case`.
+
+It also rewrites a pattern that uses only `Some.unapply` for pattern matching into a statement that calls `foreach`.
+
+<b>⚠︎This rule can destroy indentation. Be sure to use it with a formatter.</b>
+
+```scala
+/* rule = SingleConditionMatch */
+Some(1) match {
+  case result => println(result)
+}
+
+/* rewrite to: 
+ * println(Some(1))
+ */
+```
+
+Due to technical issues, only the most deeply nested patterns are substituted.
+
+```scala
+/* rule = SingleConditionMatch */
+Some(1) match {
+  case result =>
+    result match {
+      case result => println(result)
+    }
+}
+
+/* rewrite to: 
+ * Some(1) match {
+ *   case result =>
+ *     println(result)
+ * }
+ */
+```

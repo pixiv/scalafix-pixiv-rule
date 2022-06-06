@@ -62,3 +62,41 @@ case class として Exception を継承することは推奨されません: No
 val empty = List.empty // rewrite to: val empty = Nil
 val list = List[String]() // rewrite to: val list = List.empty[String]
 ```
+
+## fix.pixiv.SingleConditionMatch
+
+単一の `case` しか持たないパターンマッチを分解します。
+
+また、 `Some.unapply` のみが利用されているパターンを `foreach` 呼び出しに書き換えます。
+
+<b>※このルールではインデントが破壊されることがあります。必ずフォーマッターと併用してください</b>
+
+```scala
+/* rule = SingleConditionMatch */
+Some(1) match {
+  case result => println(result)
+}
+
+/* rewrite to: 
+ * println(Some(1))
+ */
+```
+
+技術的な問題により、ネストされたパターンでは、最深のものだけが置換されます。
+
+```scala
+/* rule = SingleConditionMatch */
+Some(1) match {
+  case result =>
+    result match {
+      case result => println(result)
+    }
+}
+
+/* rewrite to: 
+ * Some(1) match {
+ *   case result =>
+ *     println(result)
+ * }
+ */
+```
