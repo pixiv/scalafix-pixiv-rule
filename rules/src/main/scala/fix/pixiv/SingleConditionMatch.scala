@@ -11,7 +11,7 @@ class SingleConditionMatch extends SemanticRule("SingleConditionMatch") {
   override def fix(implicit doc: SemanticDocument): Patch = doc.tree.collect {
     // case a => a
     // SingleReturn の場合は Match が含まれることはない
-    case SimpleReturn(t) => Patch.replaceTree(t, t.expr.toString())
+    case SimpleReturn(t) => Patch.replaceTree(t, t.expr.toString)
     // case a => {f(a); g(a)}
     case HasBlock(t, pName, expr, b) if !hasMatch(b) =>
       toBlockPatch(t, pName.value, expr, b)
@@ -25,7 +25,7 @@ class SingleConditionMatch extends SemanticRule("SingleConditionMatch") {
         Term.Apply(
           Term.Select(expr, Term.Name("foreach")),
           List(Term.Block(List(Term.Function(List(Term.Param(Nil, pName, None, None)), b))))
-        ).toString()
+        ).toString
       )
     case _ =>
       Patch.empty
@@ -47,14 +47,13 @@ class SingleConditionMatch extends SemanticRule("SingleConditionMatch") {
     has
   }
 
-  // TODO: (a \ "test") の \ が消える問題に対応する
   private def toSingleReplaceIfOnceUseVal(from: Tree, valName: String, rhs: Term, body: Term): Patch = {
     body.collect {
       case v: Term.Name if v.value == valName => v
     } match {
       case List(name) =>
-        // TODO: 同じブロック内に変数名と同一の文字列リテラル (or 再定義された変数) があったら正しく変換できない
-        Patch.replaceTree(from, body.toString().replaceFirst(name.value, rhs.toString()))
+        // String#replace 系のメソッドでは、 "\" が消滅するので "\\" に置換してあげる
+        Patch.replaceTree(from, body.toString.replaceFirst(name.value, rhs.toString.replaceAll("\\\\", "\\\\\\\\")))
       case _ => toBlockPatch(from, valName, rhs, body)
     }
   }
@@ -64,9 +63,10 @@ class SingleConditionMatch extends SemanticRule("SingleConditionMatch") {
   }
 
   private def toBlockPatch(from: Tree, defVal: Defn.Val, body: Term): Patch = {
+    // Block に変換する際、改行を入れないと前の処理の引数として渡されてしまうことがある
     body match {
-      case Term.Block(list) => Patch.replaceTree(from, Term.Block(List(defVal).appendedAll(list)).toString())
-      case body => Patch.replaceTree(from, Term.Block(List(defVal, body)).toString())
+      case Term.Block(list) => Patch.replaceTree(from, "\n" + Term.Block(List(defVal).appendedAll(list)).toString)
+      case body => Patch.replaceTree(from, "\n" + Term.Block(List(defVal, body)).toString)
     }
   }
 }

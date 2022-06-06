@@ -1,6 +1,9 @@
 package fix.pixiv
 
 object SingleConditionMatch {
+  implicit class slash(i: Int) {
+    def \(str: String) = ""
+  }
 
   private val result = Some(1)
 
@@ -10,12 +13,14 @@ object SingleConditionMatch {
 
   println(Some(1))
 
-  {
+  
+{
   val result = Some(1)
   println(result.getOrElse(result))
 }
 
-  {
+  
+{
   val result = Some(1)
   println(result)
   println(result)
@@ -30,4 +35,6 @@ object SingleConditionMatch {
         case Some(result2) => println(result2)
         case _ => println("hoge")
       }
+
+  (123 \ "test").length.compareTo(2)
 }
