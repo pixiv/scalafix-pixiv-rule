@@ -10,20 +10,35 @@ object SingleConditionMatch {
   }
 
   Some(1) match {
-    case Some(result2) => println(result2)
+    case Some(result) => println(result)
   }
 
   Some(1) match {
-    case result3 => println(result3)
+    case result => println(result)
   }
 
   Some(1) match {
-    case result4 => println(result4.getOrElse(result4))
+    case result => println(result.getOrElse(result))
   }
 
   Some(1) match {
-    case result5 =>
-      println(result5)
-      println(result5)
+    case result =>
+      println(result)
+      println(result)
+  }
+
+  Some(1) match {
+    case Some(result) =>
+      result match {
+        case result => println(result)
+      }
+  }
+
+  Some(1) match {
+    case result =>
+      result match {
+        case Some(result2) => println(result2)
+        case _ => println("hoge")
+      }
   }
 }
