@@ -3,3 +3,4 @@ fix.pixiv.ZeroIndexToHead
 fix.pixiv.CheckIsEmpty
 fix.pixiv.NonCaseException
 fix.pixiv.UnifyEmptyList
+fix.pixiv.SingleConditionMatch
