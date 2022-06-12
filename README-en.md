@@ -1,6 +1,6 @@
 # Scalafix rules for Scalafix-Rule-Pixiv
 
-Generic refactoring rules available in [scalafix](https://scalacenter.github.io/scalafix/)
+General refactoring rules available in [scalafix](https://scalacenter.github.io/scalafix/)
 
 日本語版の README.md は [こちら](./README.md)
 
@@ -12,7 +12,7 @@ ThisBuild / scalafixDependencies += "net.pixiv" %% "scalafix-pixiv-rule" % "<VER
 
 ## fix.pixiv.UnnecessarySemicolon
 
-Deletes unneeded end-of-line semicolons. If a line is connected after the semicolon, it is not deleted.
+Remove unnecessary end-of-line semicolons. If a line is connected after the semicolon, it will be not deleted.
 
 ```scala
 /* rule = UnnecessarySemicolon */
@@ -31,7 +31,7 @@ Seq(1, 2, 3)(0) // rewrite to: `Seq(1, 2, 3).head`
 
 ## fix.pixiv.CheckIsEmpty
 
-Replace `Option` and `Seq` emptiness checks with `isEmpty`, `nonEmpty`, and `isDefined`.
+Replace emptiness checks for `Option` and `Seq` with `isEmpty`, `nonEmpty`, and `isDefined`.
 
 ```scala
 /* rule = CheckIsEmpty */
@@ -43,7 +43,7 @@ Some(1).nonEmpty // if `CheckIsEmpty.alignIsDefined = true` then rewrite to Some
 
 Raise a warning for `case class` definitions that inherit from `Exception`.
 
-The reason this is necessary is that the benefits of exception hierarchy and identity are lost when implemented as a `case class'.
+This is because implementing `case class` would compromise the benefits of exception hierarchy and uniqueness.
 
 ```scala
 /* rule = NonCaseException */
@@ -54,11 +54,11 @@ case class として Exception を継承することは推奨されません: No
 
 ## fix.pixiv.UnifyEmptyList
 
-Replace `List()` and `List.empty` without type variables with `Nil`.
+Replace `List()` and `List.empty` without type variables specification with `Nil`.
 
 This is because `Nil` is defined as `List[Nothing]`.
 
-Also, for consistency, `List[Any]()`, which had a type variable specification, has been replaced with `List.empty[Any]`.
+Also, `List[Any]()` with a type variable specification is replaced with `List.empty[Any]`.
 
 ```scala
 /* rule = EmptyListToNil */
@@ -67,11 +67,12 @@ val list = List[String]() // rewrite to: val list = List.empty[String]
 ```
 
 ## fix.pixiv.SingleConditionMatch
+
 Split a pattern match that has only one `case`.
 
-It also rewrites a pattern that uses only `Some.unapply` for pattern matching into a statement that calls `foreach`.
+It also replaces patterns where only `Some.unapply` is used with `foreach` calls.
 
-<b>⚠︎This rule can destroy indentation. Be sure to use it with a formatter.</b>
+<b>⚠︎This rule may destroy indentation. Always use with a formatter!</b>
 
 ```scala
 /* rule = SingleConditionMatch */
@@ -79,12 +80,12 @@ Some(1) match {
   case result => println(result)
 }
 
-/* rewrite to: 
+/* rewrite to:
  * println(Some(1))
  */
 ```
 
-Due to technical issues, only the most deeply nested patterns are substituted.
+Due to technical issues, only the most deeply nested patterns will be replaced.
 
 ```scala
 /* rule = SingleConditionMatch */
@@ -95,7 +96,7 @@ Some(1) match {
     }
 }
 
-/* rewrite to: 
+/* rewrite to:
  * Some(1) match {
  *   case result =>
  *     println(result)
