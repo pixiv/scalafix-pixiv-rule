@@ -67,7 +67,7 @@ val list = List[String]() // rewrite to: val list = List.empty[String]
 
 単一の `case` しか持たないパターンマッチを分解します。
 
-また、 `Some.unapply` のみが利用されているパターンを `foreach` 呼び出しに書き換えます。
+また、 `Some.unapply` のみが利用されているパターンを `foreach` 呼び出しに置換します。
 
 <b>※このルールではインデントが破壊されることがあります。必ずフォーマッターと併用してください</b>
 
