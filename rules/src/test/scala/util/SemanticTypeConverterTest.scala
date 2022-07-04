@@ -23,7 +23,7 @@ class SemanticTypeConverterTest extends AnyFunSuite {
   }
 
   test("isAssignableTo") {
-    assert(SingleType(null, scalafix.v1.Symbol("scala/collection/Seq#")).isAssignableFrom(classOf[Seq[_]]))
+    assert(SingleType(null, scalafix.v1.Symbol("scala/collection/immutable/List#")).isAssignableTo(classOf[Seq[_]]))
   }
 
   test("symbolToClass: クラス名を取得できる") {
