@@ -1,3 +1,5 @@
+![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.pixiv/scalafix-pixiv-rule_2.13/badge.png)
+
 # Scalafix rules for Scalafix-Rule-Pixiv
 
 General refactoring rules available in [scalafix](https://scalacenter.github.io/scalafix/)
