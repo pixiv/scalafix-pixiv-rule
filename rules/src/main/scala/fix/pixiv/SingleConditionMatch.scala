@@ -65,7 +65,7 @@ class SingleConditionMatch extends SemanticRule("SingleConditionMatch") {
   private def toBlockPatch(from: Tree, defVal: Defn.Val, body: Term): Patch = {
     // Block に変換する際、改行を入れないと前の処理の引数として渡されてしまうことがある
     body match {
-      case Term.Block(list) => Patch.replaceTree(from, "\n" + Term.Block(List(defVal).appendedAll(list)).toString)
+      case Term.Block(list) => Patch.replaceTree(from, "\n" + Term.Block(List(defVal) ++ list).toString)
       case body => Patch.replaceTree(from, "\n" + Term.Block(List(defVal, body)).toString)
     }
   }
