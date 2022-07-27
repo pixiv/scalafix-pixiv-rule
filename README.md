@@ -55,6 +55,8 @@ case class として Exception を継承することは推奨されません: No
 
 ## fix.pixiv.UnifyEmptyList
 
+⚠️ Scala 2.13.x 系のみ対応しています。
+
 型変数指定のない `List()` や `List.empty` を `Nil` に置き換えます。
 これは、 `Nil` が `List[Nothing]` として定義されているためです。
 また、型変数指定のある `List[Any]()` は `List.empty[Any]` へと置換されます。

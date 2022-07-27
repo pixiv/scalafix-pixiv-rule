@@ -56,6 +56,8 @@ case class として Exception を継承することは推奨されません: No
 
 ## fix.pixiv.UnifyEmptyList
 
+⚠️ Only Scala 2.13.x is supported
+
 Replace `List()` and `List.empty` without type variables specification with `Nil`.
 
 This is because `Nil` is defined as `List[Nothing]`.

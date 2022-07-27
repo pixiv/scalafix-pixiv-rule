@@ -2,7 +2,7 @@ import com.typesafe.sbt.SbtLicenseReport.autoImportImpl.licenseReportDir
 
 lazy val V = _root_.scalafix.sbt.BuildInfo
 
-lazy val rulesCrossVersions = Seq(V.scala213)
+lazy val rulesCrossVersions = Seq(V.scala213, V.scala212)
 lazy val scala3Version = "3.0.1"
 
 ThisBuild / scalafixScalaBinaryVersion := CrossVersion.binaryScalaVersion(scalaVersion.value)
@@ -115,6 +115,11 @@ lazy val tests = projectMatrix
   .customRow(
     scalaVersions = Seq(V.scala213),
     axisValues = Seq(TargetAxis(V.scala213), VirtualAxis.jvm),
+    settings = Seq()
+  )
+  .customRow(
+    scalaVersions = Seq(V.scala212),
+    axisValues = Seq(TargetAxis(V.scala212), VirtualAxis.jvm),
     settings = Seq()
   )
   .dependsOn(rules)
