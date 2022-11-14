@@ -104,3 +104,21 @@ Some(1) match {
  * }
  */
 ```
+
+## fix.pixiv.MockitoThenToDo
+
+[Mockito](https://site.mockito.org/) を Scala で使う場合の記法を統一します。
+
+when/then 構文は戻り値型のチェックを受けられる反面で、 void (Unit) を返却したい場合は使えないなどのデメリットがあります。
+このルールでは、 when/then 構文で書かれたテストコードを do/when 構文に置き換えます。
+
+```scala
+/* rule = MockitoThenToDo */
+Mockito.when(a.hoge()).thenReturn("mock1").thenReturn("mock2")
+when(a.fuga).thenReturn("mock")
+
+/* rewrite to:
+ * Mockito.doReturn("mock1").doReturn("mock2").when(a).hoge()
+ * Mockito.doReturn("mock").when(a).fuga
+ */
+```

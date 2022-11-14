@@ -107,3 +107,22 @@ Some(1) match {
  * }
  */
 ```
+
+
+## fix.pixiv.MockitoThenToDo
+
+Unify the notation for using [Mockito](https://site.mockito.org/) in Scala.
+
+While when/then syntax can be used to check the return type, it has some disadvantages, such as not being able to return void (Unit).
+This rule replaces test code written in when/then syntax with do/when syntax.
+
+```scala
+/* rule = MockitoThenToDo */
+Mockito.when(a.hoge()).thenReturn("mock1").thenReturn("mock2")
+when(a.fuga).thenReturn("mock")
+
+/* rewrite to:
+ * Mockito.doReturn("mock1").doReturn("mock2").when(a).hoge()
+ * Mockito.doReturn("mock").when(a).fuga
+ */
+```
