@@ -11,7 +11,7 @@ class MockitoThenToDo {
     def hoge(): String = "hoge"
     def fuga: String = "fuga"
     def piyo(s: String): String = s"piyo: $s"
-    def foo: String = "foo"
+    def foo(a: Int)(b: Int): String = "foo"
   }
   private val a = Mockito.mock(classOf[A])
   Mockito.when(a.hoge()).thenReturn("mock1").thenReturn("mock2")
@@ -20,9 +20,9 @@ class MockitoThenToDo {
     val s = invocation.getArgument[String](0)
     s"mock: $s"
   }
-  Mockito.when(a.foo).thenThrow(new RuntimeException("mock"))
+  Mockito.when(a.foo(1)(2)).thenThrow(new RuntimeException("mock"))
   println(a.hoge())
   println(a.fuga)
   println(a.piyo(""))
-  println(a.foo)
+  println(a.foo(1)(2))
 }
