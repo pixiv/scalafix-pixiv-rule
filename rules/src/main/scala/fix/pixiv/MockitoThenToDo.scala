@@ -25,7 +25,7 @@ private object MockitoDo {
       case method => throw new RuntimeException(s"Mockito の then メソッドでない可能性があります: $method")
     }
 
-  def apply(target: Term.Name, func: Term.Name, args: List[List[Term]], thenTerm: List[(String, Term)]): Term = {
+  def apply(target: Term.Name, func: Term.Name, args: List[List[Term]], thenTerm: List[(String, List[Term])]): Term = {
     val doTherm = thenTerm.foldLeft[Term] {
       Term.Name("Mockito")
     } { case (term, (method, result)) =>
@@ -34,7 +34,7 @@ private object MockitoDo {
           term,
           Term.Name(mathodNameConverter(method))
         ),
-        List(result)
+        result
       )
     }
     args match {
@@ -71,13 +71,13 @@ private object MockitoDo {
 private object MockitoThen {
   val methodNames: List[String] =
     List("thenReturn", "thenAnswer", "thenThrow")
-  def unapply(tree: Tree): Option[(Term.Name, Term.Name, List[List[Term]], List[(String, Term)])] = tree match {
+  def unapply(tree: Tree): Option[(Term.Name, Term.Name, List[List[Term]], List[(String, List[Term])])] = tree match {
     case Term.Apply(
           Term.Select(
-            MockitoThen(target, func, args, thenTerm: List[(String, Term)]),
+            MockitoThen(target, func, args, thenTerm: List[(String, List[Term])]),
             Term.Name(method)
           ),
-          List(result)
+          result
         ) if methodNames.contains(method) =>
       Some(target, func, args, thenTerm :+ (method, result))
     case Term.Apply(

@@ -12,7 +12,7 @@ class MockitoThenToDo {
   }
   private val a = Mockito.mock(classOf[A])
   Mockito.doReturn("mock1").doReturn("mock2").when(a).hoge()
-  Mockito.doReturn("mock").when(a).fuga
+  Mockito.doReturn("mock1", "mock2").when(a).fuga
   Mockito.doAnswer { invocation => 
   val s = invocation.getArgument[String](0)
   s"mock: $s"
