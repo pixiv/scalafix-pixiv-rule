@@ -5,3 +5,4 @@ fix.pixiv.NonCaseException
 fix.pixiv.UnifyEmptyList
 fix.pixiv.SingleConditionMatch
 fix.pixiv.MockitoThenToDo
+fix.pixiv.UnifiedArrow

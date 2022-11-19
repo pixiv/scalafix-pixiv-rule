@@ -22,6 +22,17 @@ val x = 3; // rewrite to: `val x = 3`
 val a = 1; val b = 2
 ```
 
+## fix.pixiv.UnifiedArrow
+
+Replace deprecated arrow (→, ⇒) characters with ->, =>.
+
+```scala
+/* rule = UnifiedArrow */
+List(1 → "a", 2 → "b", 3 → "c").map { // rewrite to: List(1 -> "a", 2 -> "b", 3 -> "c").map {
+  case (_, s) ⇒ s // rewrite to: case (_, s) => s
+}
+```
+
 ## fix.pixiv.ZeroIndexToHead
 
 Replaces access to the first element by index in `Seq` with a call to `head`.
