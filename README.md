@@ -22,6 +22,17 @@ val x = 3; // rewrite to: `val x = 3`
 val a = 1; val b = 2
 ```
 
+## fix.pixiv.UnifiedArrow
+
+非推奨の矢印 (→, ⇒) 文字を ->, => に置換します。
+
+```scala
+/* rule = UnifiedArrow */
+List(1 → "a", 2 → "b", 3 → "c").map { // rewrite to: List(1 -> "a", 2 -> "b", 3 -> "c").map {
+  case (_, s) ⇒ s // rewrite to: case (_, s) => s
+}
+```
+
 ## fix.pixiv.ZeroIndexToHead
 
 `Seq` のインデックスによる最初の要素へのアクセスを `head` 呼び出しに置換します。
