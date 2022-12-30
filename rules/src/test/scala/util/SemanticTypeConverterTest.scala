@@ -30,6 +30,10 @@ class SemanticTypeConverterTest extends AnyFunSuite {
     assert(classOf[Seq[_]] == SemanticTypeConverter.symbolToClass(scalafix.v1.Symbol("scala/collection/Seq#")))
   }
 
+  test("symbolToClass: オブジェクトを取得できる") {
+    assert(Seq.getClass == SemanticTypeConverter.symbolToClass(scalafix.v1.Symbol("scala/collection/Seq.")))
+  }
+
   test("symbolToClass: 型パラメータを持つクラス名を取得できる") {
     assert(
       classOf[List[_]] == SemanticTypeConverter.symbolToClass(scalafix.v1.Symbol("scala/collection/immutable/List#[T]"))

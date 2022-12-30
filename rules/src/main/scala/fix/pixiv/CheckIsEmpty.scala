@@ -1,6 +1,7 @@
 package fix.pixiv
 
-import scala.collection.compat.IterableOnce
+import scala.collection.immutable.{NumericRange, Queue}
+import scala.collection.mutable
 import scala.meta.{Lit, Term, Tree}
 
 import fix.pixiv.CheckIsEmpty.isType
@@ -30,7 +31,23 @@ class CheckIsEmpty(config: CheckIsEmptyConfig) extends SemanticRule("CheckIsEmpt
 
 private object CheckIsEmpty {
   def isTypeHasIsEmpty(x1: Term)(implicit doc: SemanticDocument): Boolean = {
-    isType(x1, classOf[IterableOnce[Any]]) || isType(x1, classOf[Option[Any]])
+    Seq(
+      classOf[Seq[Any]],
+      Seq.getClass,
+      Vector.getClass,
+      NumericRange.getClass,
+      // String はこのルールでは扱わない
+      Range.getClass,
+      List.getClass,
+      Queue.getClass,
+      classOf[mutable.Seq[Any]],
+      classOf[Option[Any]],
+      Option.getClass,
+      Some.getClass,
+      None.getClass
+    ).exists { clazz =>
+      isType(x1, clazz)
+    }
   }
 
   def isType(x1: Term, clazz: Class[_])(implicit doc: SemanticDocument): Boolean = {

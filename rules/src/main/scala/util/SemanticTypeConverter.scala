@@ -34,11 +34,17 @@ object SemanticTypeConverter {
   def symbolToClass(symbol: scalafix.v1.Symbol): Class[_] = {
     val identifierRegStr = "[a-zA-Z$_][a-zA-Z1-9$_]*"
     val symbolRegStr = s"($identifierRegStr(?:[/.]$identifierRegStr)*)"
-    val finRegStr = "[#.]"
     val typeRegStr = s"\\[$identifierRegStr(?:,$identifierRegStr)*]$$"
-    val typeValMatch = (s"^$symbolRegStr$finRegStr(?:$typeRegStr)?$$").r
+    val classTypeValMatch = (s"^$symbolRegStr#(?:$typeRegStr)?$$").r
+    val objectTypeValMatch = (s"^$symbolRegStr\\.(?:$typeRegStr)?$$").r
     symbol.toString() match {
-      case typeValMatch(str1) => symbolStringToClass(str1.replace('/', '.'))
+      case classTypeValMatch(str1) => symbolStringToClass(
+          str1.replace('/', '.')
+        )
+      case objectTypeValMatch(str1) => symbolStringToClass(
+          // 先に ScalaMeta 側で挿入された . を削除する
+          str1.replace('/', '.') + "$"
+        )
       case _ => throw new ToClassException(s"${symbol.toString()} を完全修飾クラス名に変換できませんでした")
     }
   }
@@ -46,7 +52,6 @@ object SemanticTypeConverter {
   @throws[ToClassException]
   def symbolStringToClass(str: String): Class[_] = {
     Try {
-      // 本来はオブジェクトなら '$' をつけるべきだが、`apply` の戻り値は元のクラスのため、そちらに合わせる
       Class.forName(str)
     }.recover[Class[_]] {
       case _ =>
