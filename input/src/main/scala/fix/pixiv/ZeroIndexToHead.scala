@@ -7,6 +7,8 @@ object ZeroIndexToHead {
   val seq = Seq(1, 2, 3)
   seq(0)
 
+  Seq(0) // これは apply 相当のため .head に変換されない
+
   Seq(1, 2, 3)(0)
 
   val list = List(1, 2, 3)
