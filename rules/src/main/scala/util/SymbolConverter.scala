@@ -1,6 +1,6 @@
 package util
 
-import scalafix.v1.{ClassSignature, MethodSignature, NoType, SemanticType, Symtab, TypeRef, TypeSignature, ValueSignature}
+import scalafix.v1._
 import util.SemanticTypeConverter.SemanticTypeToClass
 
 object SymbolConverter {

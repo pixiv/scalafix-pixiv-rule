@@ -2,7 +2,7 @@ package util
 
 import scala.util.Try
 
-import scalafix.v1.{BooleanConstant, ByteConstant, CharConstant, Constant, ConstantType, DoubleConstant, FloatConstant, IntConstant, LongConstant, NullConstant, SemanticType, ShortConstant, SingleType, StringConstant, SuperType, ThisType, TypeRef, UnitConstant}
+import scalafix.v1._
 
 object SemanticTypeConverter {
   implicit class SemanticTypeToClass(semanticType: SemanticType) {
