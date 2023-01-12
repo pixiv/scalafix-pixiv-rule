@@ -8,8 +8,7 @@ import util.SymbolConverter.SymbolToSemanticType
 class UnifyEmptyList extends SemanticRule("UnifyEmptyList") {
   override def fix(implicit doc: SemanticDocument): Patch = {
     doc.tree.collect {
-      case t @ Term.Apply(Term.ApplyType(list @ Term.Name("List"), List(Type.Name(typeVar))), Nil)
-          if isListApply(list) =>
+      case t @ Term.Apply(Term.ApplyType(list @ Term.Name("List"), List(Type.Name(typeVar))), Nil) if isList(list) =>
         typeVar match {
           // List[Nothing]()
           case "Nothing" => Patch.replaceTree(t, "Nil")
@@ -23,11 +22,7 @@ class UnifyEmptyList extends SemanticRule("UnifyEmptyList") {
       case Case((t @ Pat.Extract(Term.Name("List"), Nil), _, _)) =>
         Patch.replaceTree(t, "Nil")
       // List()
-      case t @ Term.Apply(list @ Term.Name("List"), Nil) if isListApply(list) =>
-        Patch.replaceTree(t, "Nil")
-      // List.empty[Nothing]
-      case t @ Term.ApplyType(Term.Select(list @ Term.Name("List"), Term.Name("empty")), List(Type.Name("Nothing")))
-          if isListApply(list) =>
+      case t @ Term.Apply(list @ Term.Name("List"), Nil) if isList(list) =>
         Patch.replaceTree(t, "Nil")
       case t @ Term.Select(list @ Term.Name("List"), Term.Name("empty")) if isListApply(list) =>
         t.parent match {
@@ -38,8 +33,6 @@ class UnifyEmptyList extends SemanticRule("UnifyEmptyList") {
           // List.empty
           case _ => Patch.replaceTree(t, "Nil")
         }
-      case t @ Pat.Extract(list @ Term.Name("List"), Nil) if isList(list) =>
-        Patch.replaceTree(t, "Nil")
     }.asPatch
   }
 
