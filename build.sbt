@@ -76,7 +76,10 @@ lazy val rules = projectMatrix
 lazy val input = projectMatrix
   .settings(
     publish / skip := true,
-    libraryDependencies += "org.mockito" % "mockito-core" % "4.8.1"
+    libraryDependencies ++= Seq(
+      "org.mockito" % "mockito-core" % "4.8.1",
+      "org.scalatest" %% "scalatest" % "3.2.11"
+    )
   )
   .defaultAxes(VirtualAxis.jvm)
   .jvmPlatform(scalaVersions = rulesCrossVersions :+ scala3Version)
@@ -84,7 +87,10 @@ lazy val input = projectMatrix
 lazy val output = projectMatrix
   .settings(
     publish / skip := true,
-    libraryDependencies += "org.mockito" % "mockito-core" % "4.8.1"
+    libraryDependencies ++= Seq(
+      "org.mockito" % "mockito-core" % "4.8.1",
+      "org.scalatest" %% "scalatest" % "3.2.11"
+    )
   )
   .defaultAxes(VirtualAxis.jvm)
   .jvmPlatform(scalaVersions = rulesCrossVersions :+ scala3Version)
