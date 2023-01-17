@@ -137,3 +137,21 @@ when(a.fuga).thenReturn("mock")
  * Mockito.doReturn("mock").when(a).fuga
  */
 ```
+
+## fix.pixiv.ScalatestAssertThrowsToIntercept
+Unify the assertion of Exceptions for using [Scalatest](https://www.scalatest.org/).
+
+In the case of Exception assertion in article [using_assertions](https://www.scalatest.org/user_guide/using_assertions), there are `assertThrows` and `intercept` that difference between `assertThrows` and `intercept` is `intercept` returns Exceptions but `assertThrows` does not.
+Applying this rule changes `assertThrows` to `intercept`.
+```scala
+/* rule = ScalatestAssertThrowsToIntercept */
+assertThrows[RuntimeException]{
+  a.hoge()
+}
+
+/* rewrite to:
+ * intercept[RuntimeException]{
+ *   a.hoge()
+ * }
+ */
+```
