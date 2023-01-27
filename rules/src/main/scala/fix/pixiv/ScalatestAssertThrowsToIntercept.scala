@@ -2,6 +2,8 @@ package fix.pixiv
 
 import scalafix.Patch
 import scalafix.v1._
+import util.SymbolConverter.SymbolToSemanticType
+import org.scalatest.compatible.Assertion
 
 import scala.meta._
 class ScalatestAssertThrowsToIntercept extends SemanticRule("ScalatestAssertThrowsToIntercept") {
@@ -15,7 +17,7 @@ class ScalatestAssertThrowsToIntercept extends SemanticRule("ScalatestAssertThro
     }.asPatch
   }
   private def isAssertThrows(x1: Term)(implicit doc: SemanticDocument): Boolean = {
-    x1.symbol == Symbol("org/scalatest/Assertions#assertThrows().")
+    x1.symbol.isAssignableTo(classOf[Assertion])
   }
 
 }
