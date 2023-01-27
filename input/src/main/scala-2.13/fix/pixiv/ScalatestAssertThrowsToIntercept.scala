@@ -10,9 +10,9 @@ object ScalatestAssertThrowsToIntercept {
   Assertions.assertThrows[RuntimeException] {
     throw new RuntimeException("assertThrows1")
   }
-  assertThrows[RuntimeException]{
+  assertThrows[RuntimeException] {
     throw new RuntimeException("assertThrows2")
   }
-  //変更なし
+  // 変更なし
   println("assertThrows")
 }
