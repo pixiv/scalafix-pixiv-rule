@@ -17,7 +17,7 @@ class ScalatestAssertThrowsToIntercept extends SemanticRule("ScalatestAssertThro
     }.asPatch
   }
   private def isAssertThrows(x1: Term)(implicit doc: SemanticDocument): Boolean = {
-    x1.symbol.isAssignableTo(classOf[Assertion])
+    x1.symbol.isAssignableFrom(classOf[Assertion])
   }
 
 }

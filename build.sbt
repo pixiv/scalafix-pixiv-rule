@@ -78,7 +78,7 @@ lazy val input = projectMatrix
     publish / skip := true,
     libraryDependencies ++= Seq(
       "org.mockito" % "mockito-core" % "4.8.1",
-      "org.scalatest" %% "scalatest" % "3.2.11"
+      "org.scalatest" %% "scalatest" % "3.2.15"
     )
   )
   .defaultAxes(VirtualAxis.jvm)
@@ -89,7 +89,7 @@ lazy val output = projectMatrix
     publish / skip := true,
     libraryDependencies ++= Seq(
       "org.mockito" % "mockito-core" % "4.8.1",
-      "org.scalatest" %% "scalatest" % "3.2.11"
+      "org.scalatest" %% "scalatest" % "3.2.15"
     )
   )
   .defaultAxes(VirtualAxis.jvm)
