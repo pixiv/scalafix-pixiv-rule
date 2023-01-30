@@ -1,11 +1,11 @@
 package fix.pixiv
 
+import scala.meta._
+
+import org.scalatest.compatible.Assertion
 import scalafix.Patch
 import scalafix.v1._
 import util.SymbolConverter.SymbolToSemanticType
-import org.scalatest.compatible.Assertion
-
-import scala.meta._
 class ScalatestAssertThrowsToIntercept extends SemanticRule("ScalatestAssertThrowsToIntercept") {
   override def fix(implicit doc: SemanticDocument): Patch = {
     doc.tree.collect {
