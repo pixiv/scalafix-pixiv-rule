@@ -3,7 +3,7 @@ import com.typesafe.sbt.SbtLicenseReport.autoImportImpl.licenseReportDir
 lazy val V = _root_.scalafix.sbt.BuildInfo
 
 lazy val rulesCrossVersions = Seq(V.scala213, V.scala212)
-lazy val scala3Version = "3.0.1"
+lazy val scala3Version = "3.1.3"
 
 ThisBuild / scalafixScalaBinaryVersion := CrossVersion.binaryScalaVersion(scalaVersion.value)
 ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0"
@@ -77,7 +77,7 @@ lazy val input = projectMatrix
   .settings(
     publish / skip := true,
     libraryDependencies ++= Seq(
-      "org.mockito" % "mockito-core" % "4.8.1",
+      "org.mockito" % "mockito-core" % "5.1.1",
       "org.scalatest" %% "scalatest" % "3.2.15"
     )
   )
@@ -88,7 +88,7 @@ lazy val output = projectMatrix
   .settings(
     publish / skip := true,
     libraryDependencies ++= Seq(
-      "org.mockito" % "mockito-core" % "4.8.1",
+      "org.mockito" % "mockito-core" % "5.1.1",
       "org.scalatest" %% "scalatest" % "3.2.15"
     )
   )
