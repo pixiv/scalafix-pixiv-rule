@@ -3,7 +3,7 @@ import com.typesafe.sbt.SbtLicenseReport.autoImportImpl.licenseReportDir
 lazy val V = _root_.scalafix.sbt.BuildInfo
 
 lazy val rulesCrossVersions = Seq(V.scala213, V.scala212)
-lazy val scala3Version = "3.0.1"
+lazy val scala3Version = "3.1.3"
 
 ThisBuild / scalafixScalaBinaryVersion := CrossVersion.binaryScalaVersion(scalaVersion.value)
 ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0"
@@ -47,7 +47,7 @@ lazy val src = (project in file("rules"))
   .settings(
     libraryDependencies ++= Seq(
       "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion,
-      "org.scalatest" %% "scalatest" % "3.2.11" % "test"
+      "org.scalatest" %% "scalatest" % "3.2.15" % "test"
     ),
     scalacOptions ++= Seq(
       "-deprecation",
@@ -67,7 +67,7 @@ lazy val rules = projectMatrix
     moduleName := "scalafix-pixiv-rule",
     libraryDependencies ++= Seq(
       "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion,
-      "org.scalatest" %% "scalatest" % "3.2.11" % "test"
+      "org.scalatest" %% "scalatest" % "3.2.15" % "test"
     )
   )
   .defaultAxes(VirtualAxis.jvm)
@@ -76,7 +76,7 @@ lazy val rules = projectMatrix
 lazy val input = projectMatrix
   .settings(
     publish / skip := true,
-    libraryDependencies += "org.mockito" % "mockito-core" % "4.8.1"
+    libraryDependencies += "org.mockito" % "mockito-core" % "5.1.0"
   )
   .defaultAxes(VirtualAxis.jvm)
   .jvmPlatform(scalaVersions = rulesCrossVersions :+ scala3Version)
@@ -84,7 +84,7 @@ lazy val input = projectMatrix
 lazy val output = projectMatrix
   .settings(
     publish / skip := true,
-    libraryDependencies += "org.mockito" % "mockito-core" % "4.8.1"
+    libraryDependencies += "org.mockito" % "mockito-core" % "5.1.0"
   )
   .defaultAxes(VirtualAxis.jvm)
   .jvmPlatform(scalaVersions = rulesCrossVersions :+ scala3Version)
