@@ -133,3 +133,21 @@ when(a.fuga).thenReturn("mock")
  * Mockito.doReturn("mock").when(a).fuga
  */
 ```
+
+## fix.pixiv.ScalatestAssertThrowsToIntercept
+[Scalatest](https://www.scalatest.org/)のExceptionのassertionを統一します。
+
+[using_assertions](https://www.scalatest.org/user_guide/using_assertions)のドキュメントで、Exceptionsのassertionの場合には`assertThrows`と`intercept`がありますが、 二つの違いは`intercept`はExceptionsを値として返し、`assertThrows`は返さないという振る舞いをします。
+このルールでは`assertThrows`を`intercept`に変更するものです。
+```scala
+/* rule = ScalatestAssertThrowsToIntercept */
+assertThrows[RuntimeException]{
+  a.hoge()
+}
+
+/* rewrite to:
+ * intercept[RuntimeException]{
+ *   a.hoge()
+ * }
+ */
+```

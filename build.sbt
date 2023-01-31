@@ -47,7 +47,7 @@ lazy val src = (project in file("rules"))
   .settings(
     libraryDependencies ++= Seq(
       "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion,
-      "org.scalatest" %% "scalatest" % "3.2.15" % "test"
+      "org.scalatest" %% "scalatest" % "3.2.15"
     ),
     scalacOptions ++= Seq(
       "-deprecation",
@@ -67,7 +67,7 @@ lazy val rules = projectMatrix
     moduleName := "scalafix-pixiv-rule",
     libraryDependencies ++= Seq(
       "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion,
-      "org.scalatest" %% "scalatest" % "3.2.15" % "test"
+      "org.scalatest" %% "scalatest" % "3.2.15"
     )
   )
   .defaultAxes(VirtualAxis.jvm)
@@ -76,7 +76,10 @@ lazy val rules = projectMatrix
 lazy val input = projectMatrix
   .settings(
     publish / skip := true,
-    libraryDependencies += "org.mockito" % "mockito-core" % "5.1.0"
+    libraryDependencies ++= Seq(
+      "org.mockito" % "mockito-core" % "5.1.1",
+      "org.scalatest" %% "scalatest" % "3.2.15"
+    )
   )
   .defaultAxes(VirtualAxis.jvm)
   .jvmPlatform(scalaVersions = rulesCrossVersions :+ scala3Version)
@@ -84,7 +87,10 @@ lazy val input = projectMatrix
 lazy val output = projectMatrix
   .settings(
     publish / skip := true,
-    libraryDependencies += "org.mockito" % "mockito-core" % "5.1.0"
+    libraryDependencies ++= Seq(
+      "org.mockito" % "mockito-core" % "5.1.1",
+      "org.scalatest" %% "scalatest" % "3.2.15"
+    )
   )
   .defaultAxes(VirtualAxis.jvm)
   .jvmPlatform(scalaVersions = rulesCrossVersions :+ scala3Version)
