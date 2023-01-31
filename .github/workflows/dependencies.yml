@@ -1,5 +1,6 @@
 name: dependencies
 on:
+  workflow_dispatch:
   schedule:
     - cron: '0 22 * * *'
 jobs:
@@ -10,4 +11,4 @@ jobs:
       - name: Scala Steward Github Action
         uses: scala-steward-org/scala-steward-action@v2.29.0
         with:
-          github-token: ${{ secrets.REPO_GITHUB_TOKEN }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
