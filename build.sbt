@@ -3,7 +3,7 @@ import com.typesafe.sbt.SbtLicenseReport.autoImportImpl.licenseReportDir
 lazy val V = _root_.scalafix.sbt.BuildInfo
 
 lazy val rulesCrossVersions = Seq(V.scala213, V.scala212)
-lazy val scala3Version = "3.1.3"
+lazy val scala3Version = "3.2.2"
 
 ThisBuild / scalafixScalaBinaryVersion := CrossVersion.binaryScalaVersion(scalaVersion.value)
 ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0"
