@@ -1,4 +1,4 @@
-![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.pixiv/scalafix-pixiv-rule_2.13/badge.png)
+![Maven Central](https://maven-badges.herokuapp.com/maven-central/net.pixiv/scalafix-pixiv-rule_2.13/badge.svg)
 
 # Scalafix rules for Scalafix-Rule-Pixiv
 
