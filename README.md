@@ -151,3 +151,16 @@ assertThrows[RuntimeException]{
  * }
  */
 ```
+
+## fix.pixiv.NeedMessageExtendsRuntimeException
+
+`RuntimeException` を継承した `class` の定義にメッセージが付与されていない場合は警告を発生させます。
+これは、エラー通知時の識別を可能にするためです。
+
+```scala
+/* rule = NeedMessageExtendsRuntimeException */
+class RedException extends RuntimeException {}
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeException を継承したクラスを作る際にはメッセージを付与してください: RedException
+ */
+```
