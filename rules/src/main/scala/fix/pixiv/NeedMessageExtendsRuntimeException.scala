@@ -5,8 +5,8 @@ import scala.meta.{Defn, Init, Position, Template}
 import scalafix.Patch
 import scalafix.lint.{Diagnostic, LintSeverity}
 import scalafix.v1.{SemanticDocument, SemanticRule, XtensionTreeScalafix}
-import util.SymbolConverter.SymbolToSemanticType
 import util.SemanticTypeConverter.SemanticTypeToClass
+import util.SymbolConverter.SymbolToSemanticType
 
 class NeedMessageExtendsRuntimeException extends SemanticRule("NeedMessageExtendsRuntimeException") {
   override def fix(implicit doc: SemanticDocument): Patch = {
