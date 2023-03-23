@@ -6,6 +6,7 @@ import scalafix.Patch
 import scalafix.lint.{Diagnostic, LintSeverity}
 import scalafix.v1.{SemanticDocument, SemanticRule, XtensionTreeScalafix}
 import util.SymbolConverter.SymbolToSemanticType
+import util.SemanticTypeConverter.SemanticTypeToClass
 
 class NeedMessageExtendsRuntimeException extends SemanticRule("NeedMessageExtendsRuntimeException") {
   override def fix(implicit doc: SemanticDocument): Patch = {
@@ -18,7 +19,7 @@ class NeedMessageExtendsRuntimeException extends SemanticRule("NeedMessageExtend
             _ @Template(_, List(_ @Init(typ, _, msg)), _, _)
           ) =>
         try {
-          if (typ.symbol.isAssignableTo(classOf[RuntimeException]) && msg.flatten.isEmpty) {
+          if (typ.symbol.toSemanticType.toClass == classOf[RuntimeException] && msg.flatten.isEmpty) {
             Patch.lint(NeedMessageExtendsRuntimeExceptionError(
               s"RuntimeException を継承したクラスを作る際にはメッセージを付与してください: $name",
               t.pos
