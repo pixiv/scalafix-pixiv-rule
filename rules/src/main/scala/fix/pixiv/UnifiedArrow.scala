@@ -10,6 +10,7 @@ class UnifiedArrow extends SyntacticRule("UnifiedArrow") {
   override def fix(implicit doc: SyntacticDocument): Patch = {
     doc.tokens.map {
       case t @ Token.Ident("→") => Patch.replaceToken(t, "->")
+      case t: Token.LeftArrow => Patch.replaceToken(t, "<-")
       case t: Token.RightArrow => Patch.replaceToken(t, "=>")
       case _ => Patch.empty
     }.asPatch
