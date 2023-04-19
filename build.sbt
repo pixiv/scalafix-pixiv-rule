@@ -1,5 +1,3 @@
-import com.typesafe.sbt.SbtLicenseReport.autoImportImpl.licenseReportDir
-
 lazy val V = _root_.scalafix.sbt.BuildInfo
 
 lazy val rulesCrossVersions = Seq(V.scala213, V.scala212)
