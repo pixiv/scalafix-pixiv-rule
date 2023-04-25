@@ -2,13 +2,21 @@ package fix.pixiv
 
 import scala.meta.{Defn, Init, Position, Template}
 
+import metaconfig.Configured
 import scalafix.Patch
 import scalafix.lint.{Diagnostic, LintSeverity}
-import scalafix.v1.{SemanticDocument, SemanticRule, XtensionTreeScalafix}
+import scalafix.v1.{Configuration, Rule, SemanticDocument, SemanticRule, XtensionTreeScalafix}
 import util.SemanticTypeConverter.SemanticTypeToClass
 import util.SymbolConverter.SymbolToSemanticType
 
-class NeedMessageExtendsRuntimeException extends SemanticRule("NeedMessageExtendsRuntimeException") {
+class NeedMessageExtendsRuntimeException(config: LogConfig) extends SemanticRule("NeedMessageExtendsRuntimeException") {
+  def this() = this(LogConfig())
+
+  override def withConfiguration(config: Configuration): Configured[Rule] = {
+    config.conf.getOrElse("NeedMessageExtendsRuntimeException")(this.config)
+      .map { newConfig => new NeedMessageExtendsRuntimeException(newConfig) }
+  }
+
   override def fix(implicit doc: SemanticDocument): Patch = {
     doc.tree.collect {
       case t @ Defn.Class(
@@ -20,9 +28,10 @@ class NeedMessageExtendsRuntimeException extends SemanticRule("NeedMessageExtend
           ) =>
         try {
           if (typ.symbol.toSemanticType.toClass == classOf[RuntimeException] && msg.flatten.isEmpty) {
-            Patch.lint(NeedMessageExtendsRuntimeExceptionError(
+            Patch.lint(LogLevel(
               s"RuntimeException を継承したクラスを作る際にはメッセージを付与してください: $name",
-              t.pos
+              t.pos,
+              config.level
             ))
           } else {
             Patch.empty
