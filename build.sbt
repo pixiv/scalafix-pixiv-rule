@@ -75,7 +75,7 @@ lazy val input = projectMatrix
   .settings(
     publish / skip := true,
     libraryDependencies ++= Seq(
-      "org.mockito" % "mockito-core" % "5.3.0",
+      "org.mockito" % "mockito-core" % "5.3.1",
       "org.scalatest" %% "scalatest" % "3.2.15"
     )
   )
@@ -86,7 +86,7 @@ lazy val output = projectMatrix
   .settings(
     publish / skip := true,
     libraryDependencies ++= Seq(
-      "org.mockito" % "mockito-core" % "5.3.0",
+      "org.mockito" % "mockito-core" % "5.3.1",
       "org.scalatest" %% "scalatest" % "3.2.15"
     )
   )
