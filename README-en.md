@@ -168,3 +168,22 @@ class RedException extends RuntimeException {}
 RuntimeException を継承したクラスを作る際にはメッセージを付与してください: RedException
  */
 ```
+
+## fix.pixiv.NamingConventionPackage
+Generates a warning when a class that follows a certain naming convention is found in an inappropriate package.
+
+For example, when using the [Play Framework](https://www.playframework.com/documentation/2.8.x/Anatomy), 
+a class named Controller is required to not be in the filters directory.
+
+```scala
+/*
+rule = NamingConventionPackage
+NamingConventionPackage.convention = [
+  { package = "^filters$", class = "^.+Controller$" }
+]
+ */
+package filters
+
+// class HomeController は filters パッケージに実装すべきではありません
+class HomeController {}
+```
