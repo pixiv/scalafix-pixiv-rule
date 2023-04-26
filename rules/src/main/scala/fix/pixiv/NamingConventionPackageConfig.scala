@@ -1,10 +1,9 @@
 package fix.pixiv
-
 import metaconfig.ConfDecoder
 import metaconfig.generic.Surface
 
 case class NamingConventionPackageConfig(
-    convention: List[List[String]] = List.empty
+    convention: List[Map[String, String]] = List.empty
 )
 
 object NamingConventionPackageConfig {

@@ -1,7 +1,7 @@
 /*
 rule = NamingConventionPackage
 NamingConventionPackage.convention = [
-  ["^.+\\.pixiv$", "^.+Package$"]
+  { package = "^.+\\.pixiv$", class = "^.+Package$" }
 ]
  */
 package fix.pixiv

@@ -20,8 +20,13 @@ class NamingConventionPackage(config: LogConfig, namingConventionPackageConfig: 
       }
   }
 
-  private val patterns: List[(Regex, Regex)] = namingConventionPackageConfig.convention.map {
-    case key :: value :: _ => key.r -> value.r
+  private val patterns: List[(Regex, Regex)] = namingConventionPackageConfig.convention.map { map =>
+    val (pkg, cls) = (for {
+      pkg <- map.get("package")
+      cls <- map.get("class")
+    } yield (pkg, cls))
+      .getOrElse(throw new RuntimeException(s"Config の指定が不正です: ${map.mkString(", ")}"))
+    pkg.r -> cls.r
   }
 
   override def fix(implicit doc: SemanticDocument): Patch = {
