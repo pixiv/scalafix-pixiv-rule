@@ -187,3 +187,19 @@ package filters
 // class HomeController は filters パッケージに実装すべきではありません
 class HomeController {}
 ```
+
+## fix.pixiv.PackageJavaxToJakarta
+Rewriting rules for namespaces changed since Jakarta EE 9.
+The `javax.*` namespace is changed to `jakarta.*`.
+
+The complete list of packages to be changed is [here](https://github.com/jakartaee/jakartaee-platform/blob/main/namespace/mappings.adoc).
+
+```scala
+/* rule = PackageJavaxToJakarta */
+package fix.pixiv
+
+import javax.inject.Inject // rewrite to: import jakarta.inject.Inject
+
+class PackageJavaxToJakarta @Inject()() {
+}
+```
