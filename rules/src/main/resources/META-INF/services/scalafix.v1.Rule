@@ -9,3 +9,4 @@ fix.pixiv.UnifiedArrow
 fix.pixiv.ScalatestAssertThrowsToIntercept
 fix.pixiv.NeedMessageExtendsRuntimeException
 fix.pixiv.NamingConventionPackage
+fix.pixiv.PackageJavaxToJakarta
