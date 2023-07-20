@@ -1,7 +1,7 @@
 lazy val V = _root_.scalafix.sbt.BuildInfo
 
 lazy val rulesCrossVersions = Seq(V.scala213, V.scala212)
-lazy val scala3Version = "3.2.2"
+lazy val scala3Version = "3.3.0"
 
 ThisBuild / scalafixScalaBinaryVersion := CrossVersion.binaryScalaVersion(scalaVersion.value)
 ThisBuild / scalafixDependencies += "com.github.liancheng" %% "organize-imports" % "0.6.0"
@@ -45,7 +45,7 @@ lazy val src = (project in file("rules"))
   .settings(
     libraryDependencies ++= Seq(
       "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion,
-      "org.scalatest" %% "scalatest" % "3.2.15"
+      "org.scalatest" %% "scalatest" % "3.2.16"
     ),
     scalacOptions ++= Seq(
       "-deprecation",
@@ -65,7 +65,7 @@ lazy val rules = projectMatrix
     moduleName := "scalafix-pixiv-rule",
     libraryDependencies ++= Seq(
       "ch.epfl.scala" %% "scalafix-core" % V.scalafixVersion,
-      "org.scalatest" %% "scalatest" % "3.2.15"
+      "org.scalatest" %% "scalatest" % "3.2.16"
     )
   )
   .defaultAxes(VirtualAxis.jvm)
@@ -76,7 +76,7 @@ lazy val input = projectMatrix
     publish / skip := true,
     libraryDependencies ++= Seq(
       "org.mockito" % "mockito-core" % "5.3.0",
-      "org.scalatest" %% "scalatest" % "3.2.15",
+      "org.scalatest" %% "scalatest" % "3.2.16",
       "javax.inject" % "javax.inject" % "1"
     )
   )
@@ -88,7 +88,7 @@ lazy val output = projectMatrix
     publish / skip := true,
     libraryDependencies ++= Seq(
       "org.mockito" % "mockito-core" % "5.3.0",
-      "org.scalatest" %% "scalatest" % "3.2.15",
+      "org.scalatest" %% "scalatest" % "3.2.16",
       "jakarta.inject" % "jakarta.inject-api" % "2.0.1"
     )
   )
