@@ -75,7 +75,7 @@ lazy val input = projectMatrix
   .settings(
     publish / skip := true,
     libraryDependencies ++= Seq(
-      "org.mockito" % "mockito-core" % "5.3.1",
+      "org.mockito" % "mockito-core" % "5.4.0",
       "org.scalatest" %% "scalatest" % "3.2.16",
       "javax.inject" % "javax.inject" % "1"
     )
@@ -87,7 +87,7 @@ lazy val output = projectMatrix
   .settings(
     publish / skip := true,
     libraryDependencies ++= Seq(
-      "org.mockito" % "mockito-core" % "5.3.1",
+      "org.mockito" % "mockito-core" % "5.4.0",
       "org.scalatest" %% "scalatest" % "3.2.16",
       "jakarta.inject" % "jakarta.inject-api" % "2.0.1"
     )
