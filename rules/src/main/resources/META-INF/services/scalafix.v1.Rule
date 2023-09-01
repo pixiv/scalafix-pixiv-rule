@@ -10,3 +10,4 @@ fix.pixiv.ScalatestAssertThrowsToIntercept
 fix.pixiv.NeedMessageExtendsRuntimeException
 fix.pixiv.NamingConventionPackage
 fix.pixiv.PackageJavaxToJakarta
+fix.pixiv.ShouldNotImportPackage
