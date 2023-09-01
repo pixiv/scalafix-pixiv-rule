@@ -200,3 +200,20 @@ import javax.inject.Inject // rewrite to: import jakarta.inject.Inject
 class PackageJavaxToJakarta @Inject()() {
 }
 ```
+
+## fix.pixiv.ShouldNotImportPackage
+
+ある命名規則に倣ったパッケージが適切でないパッケージから `import` されている場合に警告を行います。
+
+```scala
+/*
+rule = ShouldNotImportPackage
+ShouldNotImportPackage.blackList = [
+  { target = "^.+\\.infrastructures.*", importer = "^.+\\.models.*" }
+]
+ */
+package models
+
+// infrastructures は models から呼び出されるべきではありません
+import infrastructures
+```
